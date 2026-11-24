@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Cookie Cats gate test: summary</title>
+<style>
+@page { size: letter; margin: 0.55in 0.6in; }
+body { font: 10.3pt/1.42 -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1b1e24; margin: 0; }
+.kicker { font-size: 8pt; letter-spacing: .14em; text-transform: uppercase; color: #6a4bd6; font-weight: 700; }
+h1 { font-size: 19pt; margin: 2px 0 2px; line-height: 1.15; }
+.sub { color: #5f6570; margin: 0 0 10px; }
+.rec { background: #f1edff; border-left: 4px solid #6a4bd6; padding: 9px 12px; border-radius: 0 8px 8px 0; font-size: 11pt; margin: 8px 0 10px; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 0; }
+.kpi { background: #f4f5f8; border-radius: 8px; padding: 7px 9px; }
+.kpi b { display: block; font-size: 14.5pt; } .kpi span { font-size: 7.8pt; color: #5f6570; }
+h2 { font-size: 11pt; margin: 10px 0 3px; color: #2b2f38; }
+ul { margin: 3px 0; padding-left: 16px; } li { margin: 2px 0; }
+img { width: 100%; margin: 4px 0 0; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.foot { font-size: 7.5pt; color: #7a808a; border-top: 1px solid #e3e5ea; padding-top: 5px; margin-top: 8px; }
+</style></head><body>
+<div class="kicker">A/B test readout · Cookie Cats · first gate placement</div>
+<h1>Keep the first gate at level 30: moving it to 40 loses players</h1>
+<p class="sub">90,189 new players were randomly assigned to a first gate at level 30 (control) or level 40, and tracked for 14 days.</p>
+<div class="rec"><b>Recommendation:</b> keep the gate at level 30. Moving it to level 40 cut 7-day retention by <b>0.82 points</b> (4.3% relative), about <b>820 fewer active players per 100,000 installs</b>, with no offsetting gain anywhere in the data.</div>
+<div class="kpis">
+ <div class="kpi"><b>19.0% → 18.2%</b><span>7-day retention, gate 30 → 40</span></div>
+ <div class="kpi"><b>p = 0.0016</b><span>two-proportion z-test, day 7</span></div>
+ <div class="kpi"><b>99.9%</b><span>of 10,000 bootstrap resamples favor gate 30</span></div>
+ <div class="kpi"><b>312–1,328</b><span>players lost per 100k installs (95% CI)</span></div>
+</div>
+<img src="figures/summary_chart.png" alt="Retention by gate">
+<div class="cols">
+<div>
+<h2>What we found</h2>
+<ul>
+<li><b>Day 7:</b> 19.02% vs 18.20%, a -0.82 pt difference, 95% CI [-1.33, -0.31]. Clearly negative.</li>
+<li><b>Day 1:</b> -0.59 pts (p = 0.074): the same direction, not significant on its own.</li>
+<li><b>Robust:</b> a bootstrap (no normal approximation) gives the same day-7 interval, [-1.33, -0.30] pts.</li>
+<li><b>Engagement:</b> median rounds played are similar (17 vs 16). One 49,854-round account looks like a bot and was excluded from averages.</li>
+</ul>
+</div>
+<div>
+<h2>Caveats and next steps</h2>
+<ul>
+<li><b>Uneven split:</b> 49.56% / 50.44% instead of 50/50 (p = 0.009). Ask the data team to confirm assignment and logging didn't drop players unevenly.</li>
+<li><b>Retention ≠ revenue:</b> gates also drive purchases, which weren't in this data. If level 40 is still on the table for monetization, rerun with purchase data.</li>
+<li><b>Don't peek:</b> replaying this data with daily checks and no real effect gave false "wins" in 22% of tests vs 5% with one planned look. Fix the sample size and analysis date up front.</li>
+</ul>
+</div>
+</div>
+<div class="foot">Data: Cookie Cats A/B test (Tactile Entertainment; public Kaggle dataset), 90,189 players. Methods: two-proportion z-tests (pooled SE), unpooled 95% CIs, 10,000-sample bootstrap, chi-square sample-ratio test, permutation-based peeking simulation (2,000 A/A replays). Full analysis: cookie_cats_analysis.ipynb.</div>
+</body></html>
